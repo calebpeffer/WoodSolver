@@ -1,18 +1,78 @@
 <html>
     <head>
             <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-            <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+            <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-    </head>
-    <form action="/solve" method="POST">
-        <input type="text" name="pieces">
-        <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                <button class="dropdown-item" type="button">Action</button>
-                <button class="dropdown-item" type="button">Another action</button>
-                <button class="dropdown-item" type="button">Something else here</button>
-        </div>
-        <input type="submit">
-    </form>
+            <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+            <script src="{{url_for('static', filename='solver.js')}}"></script>
+            
+            <!-- adds gobal variable representing the path to application.-->
+            <script type=text/javascript> 
+                $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+            </script>
+            <script>
+                $(function(){
+                    $('button').click(function(){
+                        var pieces = $('#piecesId').val();
+                        var stock_options = $('#stockOptionsId').val();
+                        $.ajax({
+                            url: '/solve',
+                            data: $('form').serialize(),
+                            type: 'POST',
+                            success: function(response){
+                                console.log(response);
+                            },
+                            error: function(error){
+                                console.log(error);
+                            }
+                        });
+                    });
+                });
+            </script>
+           
+            <!-- <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js" integrity="sha256-yr4fRk/GU1ehYJPAs8P4JlTgu0Hdsp4ZKrx8bDEDC3I=" crossorigin="anonymous"></script> -->
+            <!-- <script type="text/javascript" charset="utf-8">
+                var socket = io.connect('http://' + document.domain + ':' + location.port);
+                
+                socket.on( 'connect', function() {
+                    socket.emit( 'myevent', {
+                      data: 'User Connected'
+                    } )
+
+            
+            </script> -->
+        
+        </head> 
+
+        
+    <div id = "title">
+        <h1 class="text-center">WoodSolver</h1>
+    </div>
+    <div class="container">
+        <form class = "getdata" role="form">
+            <div id = "user_input" class="row">
+                
+                <div id="piece_lengths" class = "col-md text-center">
+                    <h2>length of pieces</h2>
+                    <p> comma separated list of required piece lengths</p>
+                        <input type="text" id = "piecesId" name="pieces">
+                </div>
+                <div id="stock_options" class="col-md text-center">
+                    <h2>Stock Lengths</h2>
+                    <p>comma separated list stock lengths offered by store</p>
+                        <input type="text" id="stockOptionsId" name="options">
+                </div>
+                <div id="settings" class="col-md text-center">
+                    <h2>Settings</h2>
+                        <input type="text" name="options">
+                </div> 
+               
+            </div> 
+            <button class="btn btn-lg btn-primary btn-block" type="button">SOLVE</button>
+        </form>
+    </div>
+    
+    <!-- <button onclick="hello()">hey</button>  -->
+    
     </body>
 </html> 

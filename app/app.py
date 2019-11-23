@@ -1,10 +1,14 @@
 from flask import Flask, request, jsonify, render_template
+import json
+# from flask_socketio import SocketIO, emit
+
 from WoodSolver2 import *
 
 app = Flask(__name__)
+
 @app.route("/")
-def home():
-    return render_template("input_form.html") #fill in template
+def session():
+    return render_template("input_form.html")
 
 @app.route("/solve", methods=['POST'])
 def woodsolver():
@@ -14,7 +18,8 @@ def woodsolver():
     print(pieces_lis)
     solver = WoodSolver2(pieces_lis)
     solver.pick_pieces()
-    return str(solver)
+    printout = str(solver)
+    return json.dumps({'status':'OK', 'teststring':printout})
     
     
     # default_length = request.form("default_lengths")
@@ -32,3 +37,4 @@ def parse_input(in_string):
             
 if __name__ == "__main__":
     app.run(debug=True)
+    #  socketio.run(app)
