@@ -1,5 +1,5 @@
 from io import StringIO
-
+#todo: validate that piece is not larger than largest stock option
 
 class WoodSolver2: 
 
@@ -35,6 +35,22 @@ class WoodSolver2:
         for beam in self.beams:
             out_str.write(str(beam))
         return out_str.getvalue()
+
+    def convert_format(self):
+        
+        out_str = StringIO()
+        out_str.write("[")
+        for i, beam in enumerate(self.beams):
+            if i == len(self.beams) -1:
+                out_str.write(f"{beam.convert_format()}]")
+            else:
+                out_str.write(f"{beam.convert_format()}, ")
+
+        return out_str.getvalue()
+
+    def num_beams(self):
+        return len(self.beams)
+        
    
     def pick_pieces(self):  #takes piece   
         # print([piece.size_catagory for piece in self.cut_lengths])
@@ -53,11 +69,14 @@ class WoodSolver2:
                     beam.find_largest_fit(self.medium_bin)
         # print(str(self.medium_bin))
         for i in range(len(self.beams) -1, -1, -1):
-            if self.beams[i].can_add(self.small_bin[0]) and self.beams[i].can_add(self.small_bin[1]) and not self.beams[i].does_it_contain_medium():
-                # print("print")
-                self.beams[i].add_piece(self.small_bin[0])
-                self.small_bin.pop(0)
-                self.beams[i].find_largest_fit(self.small_bin)
+            try: # added check to see if small bin contains more than one item at this point. Assuming that step should be skipped if it doesn't. could be wrong. 
+                if self.beams[i].can_add(self.small_bin[0]) and self.beams[i].can_add(self.small_bin[1]) and not self.beams[i].does_it_contain_medium():
+                    # print("print")
+                    self.beams[i].add_piece(self.small_bin[0])
+                    self.small_bin.pop(0)
+                    self.beams[i].find_largest_fit(self.small_bin)
+            except IndexError:
+                pass
 
         for beam in self.beams:
             while self.medium_bin or self.small_bin or self.tiny_bin:
@@ -125,8 +144,15 @@ class Beam():
             order_str.write(f"{str(piece)}-")
         order_str.write(">")
         return f"Beam Length: {self.default_beam_length}, Scrap length: {self.scrap_length}, Beam Order: {order_str.getvalue()}"
-        
 
+    def convert_format(self):
+        order_str = StringIO()
+        order_str.write("<-")
+        for piece in self.pieces:
+            order_str.write(f"{str(piece)}-")
+        order_str.write(">")
+        return f"{{'beam_length': {self.default_beam_length}, 'Scrap length' : {self.scrap_length}, 'Beam Order': {order_str.getvalue()}}}"
+      
 class Piece:
     def __init__(self, length, default_size = 168):
         self.length = length

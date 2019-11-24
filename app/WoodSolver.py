@@ -1,10 +1,7 @@
 from itertools import permutations
 class WoodSolver:
     
-   
-   
-   
-   
+
     def __init__(self, uncut_length = 96, length_lis = [36, 36, 36, 36, 42, 42, 42, 42, 72, 72, 72, 72, 33, 33, 33]):
         
         self.uncut_length = uncut_length

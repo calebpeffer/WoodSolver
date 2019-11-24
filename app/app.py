@@ -10,7 +10,7 @@ app = Flask(__name__)
 def session():
     return render_template("input_form.html")
 
-@app.route("/solve", methods=['POST'])
+@app.route("/api/solve", methods=['POST'])
 def woodsolver():
     pieces_raw = request.form["pieces"]
     print(str(pieces_raw))
@@ -18,8 +18,8 @@ def woodsolver():
     print(pieces_lis)
     solver = WoodSolver2(pieces_lis)
     solver.pick_pieces()
-    printout = str(solver)
-    return json.dumps({'status':'OK', 'teststring':printout})
+    printout = solver.convert_format()
+    return json.dumps({'status':'OK', 'num_beams': solver.num_beams(), 'solver': printout})
     
     
     # default_length = request.form("default_lengths")
