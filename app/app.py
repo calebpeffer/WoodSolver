@@ -18,7 +18,7 @@ def woodsolver():
     print(pieces_lis)
     solver = WoodSolver2(pieces_lis)
     solver.pick_pieces()
-    printout = solver.convert_format()
+    printout = solver.convert_to_html()
     return json.dumps({'status':'OK', 'num_beams': solver.num_beams(), 'solver': printout})
     
     

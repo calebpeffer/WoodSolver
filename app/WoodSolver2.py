@@ -48,6 +48,18 @@ class WoodSolver2:
 
         return out_str.getvalue()
 
+    def convert_to_html(self): #convert to html 
+        
+        out_str = StringIO()
+        # out_str.write("[")
+        for i, beam in enumerate(self.beams):
+            if i == len(self.beams) -1:
+                out_str.write(f"{beam.convert_to_html()}")
+            else:
+                out_str.write(f"{beam.convert_to_html()}, ")
+
+        return out_str.getvalue()
+
     def num_beams(self):
         return len(self.beams)
         
@@ -145,14 +157,21 @@ class Beam():
         order_str.write(">")
         return f"Beam Length: {self.default_beam_length}, Scrap length: {self.scrap_length}, Beam Order: {order_str.getvalue()}"
 
-    def convert_format(self):
+    def convert_format(self): #converts to jsonable format
         order_str = StringIO()
         order_str.write("<-")
         for piece in self.pieces:
             order_str.write(f"{str(piece)}-")
         order_str.write(">")
         return f"{{'beam_length': {self.default_beam_length}, 'Scrap length' : {self.scrap_length}, 'Beam Order': {order_str.getvalue()}}}"
-      
+    def convert_to_html(self): #converts to html
+        order_str = StringIO()
+        order_str.write("-")
+        for piece in self.pieces:
+            order_str.write(f"{str(piece)}-")
+        return f"<span>Beam Length: {self.default_beam_length}</span> <span>Scrap length : {self.scrap_length}</span> <p>Beam Order: {order_str.getvalue()}</p>" 
+        
+
 class Piece:
     def __init__(self, length, default_size = 168):
         self.length = length
