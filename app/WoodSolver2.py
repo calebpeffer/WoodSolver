@@ -12,7 +12,10 @@ class WoodSolver2:
         self.default_beam_length = default_beam_length
         self.alt_beam_length = alt_beam_length
         self.beams = list()
-        
+
+        self.pick_pieces() #Runs optimization on construction, remove to disable
+
+    
     def FFD(self, cut_lengths): 
         sorted_cut_lengths = sorted(cut_lengths, key=lambda x: x.length, reverse=True) 
         # print([str(length) for length in sorted_cut_lengths])
@@ -62,24 +65,25 @@ class WoodSolver2:
 
     def num_beams(self):
         return len(self.beams)
-        
-   
+
+    def reduce_beams(self):
+        for beam in self.beams:
+            beam.reduce_beam()
+        return
+    
     def pick_pieces(self):  #takes piece   
-        # print([piece.size_catagory for piece in self.cut_lengths])
-        # print([piece.length for piece in self.large_bin])
+      
         for i, piece in enumerate(self.large_bin):
             print(i)
             new_beam = Beam()
             new_beam.add_piece(piece)
             self.beams.append(new_beam)
         self.large_bin.clear()
-        # print([beam.does_it_contain_medium() for beam in self.beams])
-        
         for beam in self.beams:
             if self.medium_bin:
                 if beam.can_add(self.medium_bin[0]):
                     beam.find_largest_fit(self.medium_bin)
-        # print(str(self.medium_bin))
+        
         for i in range(len(self.beams) -1, -1, -1):
             try: # added check to see if small bin contains more than one item at this point. Assuming that step should be skipped if it doesn't. could be wrong. 
                 if self.beams[i].can_add(self.small_bin[0]) and self.beams[i].can_add(self.small_bin[1]) and not self.beams[i].does_it_contain_medium():
@@ -112,7 +116,7 @@ class WoodSolver2:
         remaining_items = self.medium_bin + self.small_bin + self.tiny_bin
         self.FFD(remaining_items)
         print(self.medium_bin + self.small_bin + self.tiny_bin)
-
+        self.reduce_beams()
         #leaves excess in self.medium_bin, self.small_bin, and self.tiny_bin
         #may not matter, but should be refactored 
         return
@@ -149,6 +153,16 @@ class Beam():
                 self.add_piece(size_bins[j])
                 size_bins.pop(j)
                 break
+
+    def reduce_beam(self): #goes through beam alternatives and reduces stock length if possible
+        for length in self.alt_beam_length:
+            if self.used_length <= length:
+                self.default_beam_length = length  
+        
+        self.scrap_length = self.default_beam_length - self.used_length
+        return
+
+
     def __str__(self):
         order_str = StringIO()
         order_str.write("<-")
@@ -166,9 +180,11 @@ class Beam():
         return f"{{'beam_length': {self.default_beam_length}, 'Scrap length' : {self.scrap_length}, 'Beam Order': {order_str.getvalue()}}}"
     def convert_to_html(self): #converts to html
         order_str = StringIO()
-        order_str.write("-")
+        order_str.write("<-")
         for piece in self.pieces:
             order_str.write(f"{str(piece)}-")
+        order_str.write(">")
+        
         return f"<span>Beam Length: {self.default_beam_length}</span> <span>Scrap length : {self.scrap_length}</span> <p>Beam Order: {order_str.getvalue()}</p>" 
         
 

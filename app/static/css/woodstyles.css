@@ -1,0 +1,82 @@
+body {
+    /* background-image: url("../images/woodgrain.svg");
+    background-size: cover; */
+    background-color: #e6dbc9;
+}
+#title p{ 
+    color: #2e3830;
+}
+#separator{
+    background-color: #2e3830;
+    height: 50px;
+    box-shadow:1px 2px 8px rgba(0, 0, 0, .5);
+}
+#mainlogo{
+    width: 30px;
+    height: 30px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+button{
+    background-color: #c53211 !important;
+    color: white;
+    height: 50px;
+    margin-top: 2%;
+    border: none;
+    /* border: 2px solid #2e3830 !important; */
+    font-family: Futura, "Trebuchet MS", Arial, sans-serif !important; 
+    font-family: Futura, "Trebuchet MS", Arial, sans-serif !important; 
+    font-size: 25px !important; font-style: normal !important; 
+    font-variant: normal !important; 
+    font-weight: 700 !important; 
+    line-height: 26.4px !important; 
+    width: 60% !important;
+    border-radius: .2rem !important;
+
+}
+button:hover {
+    box-shadow: 1px 1px 5px #2e3830;
+}
+#title h1{ 
+    color: white;
+    font-family: Futura, "Trebuchet MS", Arial, sans-serif; 
+    font-size: 50px; font-style: normal; 
+    font-variant: normal; 
+    font-weight: 200; 
+    line-height: 200%; 
+    background-color: #c53211;
+    margin: 0px !important;
+    /* height:10%; */
+
+    /* border-bottom: 20px solid #2e3830; */
+    font-family: Futura Bold,helvetica,sans-serif;
+} 
+
+#results_container{
+    padding-top:30px;
+}
+h2{
+    color: #c53211 ;
+    font-family: Futura, "Trebuchet MS", Arial, sans-serif; 
+    font-size: 25px; font-style: normal; 
+    font-variant: normal; 
+    font-weight: 200; 
+    line-height: 26.4px; 
+} 
+p {
+     font-family: Futura, "Trebuchet MS", Arial, sans-serif;
+     font-size: 14px; 
+     font-style: normal; 
+     font-variant: normal; 
+     font-weight: 400;
+     line-height: 20px;
+} 
+form {
+    margin-top: 50px;
+}
+ 
+
+/* font imports below */
+h3 { font-family: Futura, "Trebuchet MS", Arial, sans-serif; font-size: 14px; font-style: normal; font-variant: normal; font-weight: 700; line-height: 15.4px; } 
+blockquote { font-family: Futura, "Trebuchet MS", Arial, sans-serif; font-size: 21px; font-style: normal; font-variant: normal; font-weight: 400; line-height: 30px; } 
+pre { font-family: Futura, "Trebuchet MS", Arial, sans-serif; font-size: 13px; font-style: normal; font-variant: normal; font-weight: 400; line-height: 18.5714px; }

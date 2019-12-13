@@ -89,15 +89,6 @@ def main():
     w = WoodSolver()
     w.dumb_placement()
     w.print_results()  
-    # w.bruteforce()
-    # w.print_results()  
-
-
-        
-        # try:
-        #     self.uncut_length = float(input("lenght of purchased two by fours(in): "))
-        # except:
-        #     print("must enter valid number")
 
 if __name__ == "__main__":
     main()
